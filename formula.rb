@@ -6,15 +6,15 @@ class Formula
   #*  乗算
   def self.execute(input)
     multiplied = multiply(input)
-    output = multiplied.map do |m| # ['4', '5+6&7|8']
+    output = multiplied.map do |m|
       plused = plus(m)
-      plused.map do |pl| # ['5', '6&7|8']
+      plused.map do |pl|
         anded = do_and(pl)
         anded.map do |a|
-          eval(a)
-        end.map(&:to_i).inject(:&)
-      end.map(&:to_i).inject(:+)
-    end.map(&:to_i).inject(&:*)
+          eval(a).to_i
+        end.inject(:&)
+      end.inject(:+)
+    end.inject(&:*)
     output.to_s
   end
 
@@ -28,9 +28,5 @@ class Formula
 
   def self.do_and(input)
     input.split('&')
-  end
-
-  def self.do_or(input)
-    input.split('|')
   end
 end
